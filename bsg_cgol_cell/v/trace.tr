@@ -134,6 +134,78 @@
 # Recv 0, a dead cell with 4 live neighbours dies on to the next generation.
 0010__000000000_0
 
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11100011
+0001__1_0_11100011
+# Recv 0, a live cell with 5 live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11100011
+0001__1_0_11100011
+# Recv 0, a dead cell with 5 live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11100111
+0001__1_0_11100111
+# Recv 0, a live cell with 6 live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11100111
+0001__1_0_11100111
+# Recv 0, a dead cell with 6 live neighbours dies on to the next generation.
+0010__000000000_0
+
+
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11110111
+0001__1_0_11110111
+# Recv 0, a live cell with 7 live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11110111
+0001__1_0_11110111
+# Recv 0, a dead cell with 7 live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11111111
+0001__1_0_11111111
+# Recv 0, a live cell with 8 live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11111111
+0001__1_0_11111111
+# Recv 0, a dead cell with 8 live neighbours dies on to the next generation.
+0010__000000000_0
 
 
 
