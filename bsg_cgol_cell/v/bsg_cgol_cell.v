@@ -13,24 +13,80 @@
 *   cell status remains unchanged
 **/
 
-module bsg_cgol_cell (
-    input clk_i
+module bsg_cgol_cell 
+	( input  logic clk_i
 
-    ,input en_i          
-    ,input [7:0] data_i
+    , input  logic en_i          
+    , input  logic [7:0] data_i
 
-    ,input update_i     
-    ,input update_val_i
+    , input  logic update_i     
+    , input  logic update_val_i
 
-    ,output logic data_o
-  );
+    , output logic data_o
+  	);
 
-  // TODO: Design your bsg_cgl_cell
-  // Hint: Find the module to count the number of neighbors from basejump
+	// Design your bsg_cgl_cell
+	// Hint: Find the module to count the number of neighbors from basejump
   
-  
+	// internal signals
 
+ 	// FSM control logic
+	typedef enum logic [1:0] {eWAIT, eBUSY, eDONE} state_e;
+  	state_e  ps, ns;
 
+	// define next states
+	always_comb begin
+  		case (ps)
+			eWAIT: begin
+				if (en_i)					ns = eBUSY;
+				else						ns = eWAIT;
+			end
+			eBUSY1: begin
+				if (/*done computing sum*/)	ns = eDONE;
+				else						ns = eBUSY;
+			end
+			eDONE: begin
+				if (update_i)				ns = eWAIT;
+				else						ns = eDONE;
+			end
+			default: 						ns = eWAIT;
+		endcase
+	end
 
+	// define state actions
+	always_comb begin
+  		case (ps)
+			eWAIT: begin
+
+			end
+			eBUSY: begin
+
+			end
+			eDONE: begin
+
+			end
+			default: begin
+
+			end
+		endcase
+	end
+
+	// sequential logic for dffs
+	always_ff @(posedge clk_i) begin
+		// update FSM
+		if (reset_i)
+		  	ps <= eWAIT;
+	  	else
+		  	ps <= ns;
+		// dff_en implemented here
+	end
+
+	// bsg logic blocks
+	bsg_adder_cin #(.width_p(4)) adder_sum
+		(.a_i(/**/)
+		,.b_i(/**/)
+		,.cin_i(0)
+		,.o(/**/)
+		);
 
 endmodule
