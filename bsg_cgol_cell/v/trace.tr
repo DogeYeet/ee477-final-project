@@ -21,8 +21,118 @@
 # Set the update value to 0, then set enbale to 1 and test with 0-8 live neighbors
 # Set the update value to 1, then set enbale to 1 and test with 0-8 live neighbors
 
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b00000000
+0001__1_0_00000000
+# Recv 0, a live cell with zero live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b00000000
+0001__1_0_00000000
+# Recv 0, a dead cell with zero live neighbours dies on to the next generation.
+0010__000000000_0
 
 
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b00000001
+0001__1_0_00000001
+# Recv 0, a live cell with one live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b00000001
+0001__1_0_00000001
+# Recv 0, a dead cell with one live neighbours dies on to the next generation.
+0010__000000000_0
+
+
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b00000010
+0001__1_0_00000010
+# Recv 0, a live cell with one live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b00000010
+0001__1_0_00000010
+# Recv 0, a dead cell with one live neighbours dies on to the next generation.
+0010__000000000_0
+
+
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b00000011
+0001__1_0_00000011
+# Recv 0, a live cell with two live neighbours lives on to the next generation.
+0010__000000000_1
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b00000011
+0001__1_0_00000011
+# Recv 0, a dead cell with two live neighbours dies on to the next generation.
+0010__000000000_0
+
+
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11000010
+0001__1_0_11000010
+# Recv 0, a live cell with 3 live neighbours lives on to the next generation.
+0010__000000000_1
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11000010
+0001__1_0_11000010
+# Recv 0, a dead cell with 3 live neighbours lives on to the next generation.
+0010__000000000_1
+
+
+# Update, value = 1
+0001__0_1_00000000
+# Recv 1, live cell
+0010__000000000_1
+# Enable, 8 neighbors = 8'b11000011
+0001__1_0_11000011
+# Recv 0, a live cell with 4 live neighbours dies on to the next generation.
+0010__000000000_0
+
+# Update, value = 0
+0001__0_0_00000000
+# Recv 0, live cell
+0010__000000000_0
+# Enable, 8 neighbors = 8'b11000011
+0001__1_0_11000011
+# Recv 0, a dead cell with 4 live neighbours dies on to the next generation.
+0010__000000000_0
 
 
 
