@@ -25,7 +25,7 @@ module bsg_cgol_ctrl #(
   
   	// Design your control logic
 
-	logic [game_len_width_lp-1:0] count;
+	logic [game_len_width_lp-1:0] count, frames_val;
 
 	// FSM control logic
 	typedef enum logic [2:0] {eWAIT, eUPDATE, eBUSY, eDONE} state_e;
@@ -42,7 +42,7 @@ module bsg_cgol_ctrl #(
 										ns = eBUSY;
 			end
 			eBUSY: begin
-				if (count==frames_i)	ns = eDONE;
+				if (count==frames_val)	ns = eDONE;
 				else					ns = eBUSY;
 			end
 			eDONE: begin
@@ -96,12 +96,16 @@ module bsg_cgol_ctrl #(
 	  	else
 		  	ps <= ns;
 		// set intial conditions in WAIT
-		if (ps==eWAIT)
-			count <= 0;
-		else if (ps==eBUSY)
+		if (ps==eWAIT) begin
+			count <= 1;
+			frames_val <= frames_i;
+		end else if (ps==eBUSY) begin
 			count <= count + 1;
-		else
+			frames_val <= frames_val;
+		end else begin
 			count <= count;
+			frames_val <= frames_val;
+		end
 	end
 
 endmodule
