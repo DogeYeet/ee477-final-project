@@ -29,6 +29,7 @@ module bsg_cgol_cell
 	// Hint: Find the module to count the number of neighbors from basejump
   
 	// internal signals
+	logic [3:0] count;
 
  	// FSM control logic
 	typedef enum logic [1:0] {eWAIT, eBUSY, eDONE} state_e;
@@ -38,18 +39,18 @@ module bsg_cgol_cell
 	always_comb begin
   		case (ps)
 			eWAIT: begin
-				if (en_i)					ns = eBUSY;
-				else						ns = eWAIT;
+				if (en_i)				ns = eBUSY;
+				else					ns = eWAIT;
 			end
 			eBUSY1: begin
-				if (/*done computing sum*/)	ns = eDONE;
-				else						ns = eBUSY;
+				if (count==4'b1000)		ns = eDONE;
+				else					ns = eBUSY;
 			end
 			eDONE: begin
-				if (update_i)				ns = eWAIT;
-				else						ns = eDONE;
+				if (update_i)			ns = eWAIT;
+				else					ns = eDONE;
 			end
-			default: 						ns = eWAIT;
+			default: 					ns = eWAIT;
 		endcase
 	end
 
