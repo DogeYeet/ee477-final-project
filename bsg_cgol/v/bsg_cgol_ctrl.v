@@ -102,6 +102,6 @@ module bsg_cgol_ctrl #(
 			count <= count + 1;
 		else
 			count <= count;
-
+	end
 
 endmodule
