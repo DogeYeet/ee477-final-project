@@ -28,79 +28,27 @@ module bsg_cgol_cell
 	// Design your bsg_cgl_cell
 	// Hint: Find the module to count the number of neighbors from basejump
   
-	// internal signals
-	logic [3:0] count, sum, newSum;
-	logic dff_en, newData;
+	// inernal logic signals
+	logic [3:0] sum;
+	logic newData;
 
- 	// FSM control logic
-	typedef enum logic {eWAIT, eBUSY} state_e;
-  	state_e  ps, ns;
+	// bsg instance
+	bsg_popcount #(.width_p(8)) countBits
+		(.i(data_i)
+		,.o(sum)
+		);
 
 	// gate logic for newData
-	assign newData = (((~data_o) && (sum==3)) || ((data_o) && ((sum<=3) && (2<=sum))));
+	assign newData = ( ((~data_o)&&(sum==3)) || ((data_o)&&((2<=sum)&&(sum<=3))) );
 
-	// define next states
-	always_comb begin
-  		case (ps)
-			eWAIT: begin
-				if (en_i)				ns = eBUSY;
-				else					ns = eWAIT;
-			end
-			eBUSY: begin
-				if (count==4'b1000)		ns = eWAIT;
-				else					ns = eBUSY;
-			end
-			default: 					ns = eWAIT;
-		endcase
-	end
-
-	// define state actions
-	always_comb begin
-  		case (ps)
-			eWAIT: begin
-				dff_en = 0;
-			end
-			eBUSY: begin
-				dff_en = (newSum!=sum);
-			end
-			default: begin
-				dff_en = 0;
-			end
-		endcase
-	end
-
-	// sequential logic for dffs
+	// sequential logic for data_o
 	always_ff @(posedge clk_i) begin
-		// update FSM
-		if (update_i)  // reset
-			ps <= eWAIT;
+		if (update_i) 
 			data_o <= update_val_i;
-			count <= 4'b0;
-			sum <= 4'b0;
+		else if (en_i)
+			data_o <= newData;
 		else
-			ps <= ns;  // update state
-			if (ps == eBUSY) begin
-				if (dff_en) begin
-					count <= count + 1;
-					sum <= newSum;
-				end else begin
-					count <= count;
-					sum <= sum;
-				end
-				data_o <= data_o;
-			end else begin
-				count <= 4'b0;
-				sum <= 4'b0;
-				data_o <= newData;
-			end
+			data_o <= data_o;
 	end
-
-	// bsg logic blocks
-	bsg_adder_cin #(.width_p(4)) adder_sum
-		(.a_i({3'b0, data_i[count]})
-		,.b_i(sum)
-		,.cin_i(0)
-		,.o(newSum)
-		);
 
 endmodule

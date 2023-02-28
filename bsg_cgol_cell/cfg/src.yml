@@ -2,6 +2,7 @@
 # Used by both synthesis and RTL simulation.
 synthesis.inputs.input_files: [
   "v/bsg_cgol_cell.v",
+  "${bsg_root}/bsg_misc/bsg_popcount.v",
    # TODO: Add any additional BSG files needed
 ]
 synthesis.inputs.input_files_meta: [append, subst]
