@@ -27,19 +27,18 @@ module bsg_cgol_ctrl #(
 
 	logic [game_len_width_lp-1:0] count, frames_val;
 
+	assign update_o = v_i;
+
 	// FSM control logic
-	typedef enum logic [2:0] {eWAIT, eUPDATE, eBUSY, eDONE} state_e;
+	typedef enum logic [1:0] {eWAIT, eBUSY, eDONE} state_e;
   	state_e  ps, ns;
 	
 	// define next states
 	always_comb begin
   		case (ps)
 			eWAIT: begin
-				if (v_i)				ns = eUPDATE;
+				if (v_i)				ns = eBUSY;
 				else					ns = eWAIT;
-			end
-			eUPDATE: begin
-										ns = eBUSY;
 			end
 			eBUSY: begin
 				if (count==frames_val)	ns = eDONE;
@@ -59,31 +58,21 @@ module bsg_cgol_ctrl #(
 			eWAIT: begin
 				ready_o 	= 1;
 				v_o 		= 0;
-				update_o 	= 0;
-				en_o		= 0;
-			end
-			eUPDATE: begin
-				ready_o 	= 0;
-				v_o 		= 0;
-				update_o	= 1;
 				en_o		= 0;
 			end
 			eBUSY: begin
 				ready_o 	= 0;
 				v_o			= 0;
-				update_o	= 0;
 				en_o		= 1;
 			end
 			eDONE: begin
 				ready_o 	= 0;
 				v_o			= 1;
-				update_o	= 0;
 				en_o		= 0;
 			end
 			default: begin
 				ready_o 	= 0;
 				v_o 		= 0;
-				update_o	= 0;
 				en_o		= 0;
 			end
 		endcase
@@ -103,7 +92,7 @@ module bsg_cgol_ctrl #(
 			count <= count + 1;
 			frames_val <= frames_val;
 		end else begin
-			count <= count;
+			count <= 1;
 			frames_val <= frames_val;
 		end
 	end
